@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="GameScreen" src="project://database/Assets/UI/Uxml/GameScreen.uxml?fileID=9197481963319205126&amp;guid=f1b5189520f978d49a3f088f313b4248&amp;type=3#GameScreen" />
+    <ui:Template name="LobbyScrene" src="project://database/Assets/UI/Uxml/LobbyScrene.uxml?fileID=9197481963319205126&amp;guid=be13db630c0372b4d87d8d1397f21111&amp;type=3#LobbyScrene" />
+    <ui:Template name="LoginScrene" src="project://database/Assets/UI/Uxml/LoginScrene.uxml?fileID=9197481963319205126&amp;guid=f1adf678fe519be41bcc5502dc6c7c1a&amp;type=3#LoginScrene" />
+    <ui:Template name="Language" src="project://database/Assets/UI/Uxml/Language.uxml?fileID=9197481963319205126&amp;guid=2bc9d7f217d39444588aa9e06ed01a5e&amp;type=3#Language" />
+    <ui:Template name="LoadingScreen" src="project://database/Assets/UI/Uxml/LoadingScreen.uxml?fileID=9197481963319205126&amp;guid=05adc97cd4a46264b98cf9467cb9f351&amp;type=3#LoadingScreen" />
+    <Style src="project://database/Assets/UI/Uss/LobbyScreen.uss?fileID=7433441132597879392&amp;guid=a2967e4541aa60b49bd87e9623c7a167&amp;type=3#LobbyScreen" />
+    <Style src="project://database/Assets/UI/Uss/LoadingScreen.uss?fileID=7433441132597879392&amp;guid=6234d127bf0403b42b695e06f08c9cd6&amp;type=3#LoadingScreen" />
+    <ui:Instance template="GameScreen" name="game-screen" style="display: none; position: absolute; width: 100%; height: 100%;" />
+    <ui:Instance template="LobbyScrene" name="lobby-screen" style="width: 100%; height: 100%; display: none; position: absolute;" />
+    <ui:Instance template="LoginScrene" name="login-screen" picking-mode="Ignore" style="width: 100%; height: 100%; position: absolute; display: flex;" />
+    <ui:Instance template="Language" name="language-screen" style="width: 100%; height: 100%; display: none; position: absolute;" />
+    <ui:Instance template="LoadingScreen" name="loading-screen" style="position: absolute; width: 100%; height: 100%; display: none;" />
+</ui:UXML>

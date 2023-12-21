@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uss/Common.uss?fileID=7433441132597879392&amp;guid=e7bc2ce2ac7f1744a96b7d7d43be9d81&amp;type=3#Common" />
+    <ui:VisualElement name="country-code" class="country-code">
+        <ui:Label tabindex="-1" text="Taiwan" parse-escape-sequences="true" display-tooltip-when-elided="true" name="country-name-label" style="width: 80%; margin-top: -2px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 10%; padding-bottom: 0; padding-left: 2%; text-overflow: clip; white-space: normal; height: 100%;" />
+        <ui:Label tabindex="-1" text="+886" parse-escape-sequences="true" display-tooltip-when-elided="true" name="code-number-label" style="width: 20%; align-self: flex-start; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 2%; padding-bottom: 0; padding-left: 2%; height: 100%; -unity-text-align: middle-right;" />
+    </ui:VisualElement>
+</ui:UXML>

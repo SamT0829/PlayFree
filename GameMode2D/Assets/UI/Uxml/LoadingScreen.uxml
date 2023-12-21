@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uss/LoadingScreen.uss?fileID=7433441132597879392&amp;guid=6234d127bf0403b42b695e06f08c9cd6&amp;type=3#LoadingScreen" />
+    <ui:VisualElement name="loading-loadingbar-screen" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Art/loading/loading_bg.png?fileID=2800000&amp;guid=ac7cdf5eae1ab6142b51571b20931eac&amp;type=3#loading_bg&apos;); justify-content: center; align-items: center; display: flex;">
+        <ui:VisualElement name="loading-text-icon" style="flex-grow: 0; background-image: url(&apos;project://database/Assets/Art/loading/loading_txt.png?fileID=2800000&amp;guid=960de87b06a72184ea5b4e153d6e0d7f&amp;type=3#loading_txt&apos;); width: 50%; height: 50%;" />
+        <ui:ProgressBar value="40" name="loading-progressbar" style="width: 60%; background-color: rgba(0, 0, 0, 0); -unity-background-scale-mode: stretch-to-fill; height: 6%;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="loading-circle-panel" style="flex-grow: 1; display: flex; position: absolute; width: 100%; height: 100%; background-color: rgba(233, 232, 232, 0.21); justify-content: center; align-self: center;">
+        <ui:VisualElement name="loading-circle-icon" class="loading-icon" />
+    </ui:VisualElement>
+</ui:UXML>

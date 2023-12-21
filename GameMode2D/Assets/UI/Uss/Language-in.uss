@@ -1,0 +1,39 @@
+.theme_language-ch {
+    display: none;
+}
+
+.theme_language-en {
+    display: none;
+}
+
+.theme_language-es {
+    display: none;
+}
+
+.theme_language-in {
+    display: flex;
+}
+
+.theme_language-jp {
+    display: none;
+}
+
+.theme_language-kr {
+    display: none;
+}
+
+.theme_language-ph {
+    display: none;
+}
+
+.theme_language-pt {
+    display: none;
+}
+
+.theme_language-th {
+    display: none;
+}
+
+.theme_language-vt {
+    display: none;
+}

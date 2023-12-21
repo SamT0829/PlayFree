@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uss/GameScreen.uss?fileID=7433441132597879392&amp;guid=38b86d72c83a55b49adc0470a6d6398a&amp;type=3#GameScreen" />
+    <ui:VisualElement name="game-screen" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Art/Lobby/bg.png?fileID=2800000&amp;guid=f67e6571f4d8b9740b8fdf7bb7183a7d&amp;type=3#bg&apos;);">
+        <ui:VisualElement name="game-screen-head" picking-mode="Ignore" style="flex-grow: 0; width: 100%; height: 10%; background-image: url(&apos;project://database/Assets/Art/Lobby/bar_top.png?fileID=2800000&amp;guid=eda13407b4e1414499dbe8fb0ad88e17&amp;type=3#bar_top&apos;); justify-content: center;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="game-screen_home-button" class="home-button home-button-w" style="bottom: 0; width: 15%; height: 103%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="game-show-panel" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

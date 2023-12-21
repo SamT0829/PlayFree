@@ -1,0 +1,9 @@
+.gameinfo-size {
+    width: 30%;
+    height: 45%;
+}
+
+.max-size {
+    width: 100%;
+    height: 100%;
+}

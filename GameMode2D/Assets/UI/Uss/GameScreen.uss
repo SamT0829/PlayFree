@@ -1,0 +1,30 @@
+.home-button {
+    height: 80%;
+    background-color: rgba(188, 188, 188, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-image: url('project://database/Assets/Art/Lobby/button_home_2.png?fileID=2800000&guid=8dffb940251fd544084cce6762984b61&type=3#button_home_2');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 10%;
+    align-self: flex-end;
+    right: 5%;
+}
+
+.home-button:hover {
+    background-image: url('project://database/Assets/Art/Lobby/button_home.png?fileID=2800000&guid=691c1fbb2cd125849865aa71e45200be&type=3#button_home');
+}
+
+.home-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/button_home_3.png?fileID=2800000&guid=9923996ec59401f4d8695bf74631f13a&type=3#button_home_3');
+}
+
+.home-button-w {
+}
+
+.home-button-v {
+    bottom: 3%;
+    right: 5%;
+    width: 15%;
+}

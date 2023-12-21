@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Uss/LobbyScreen.uss?fileID=7433441132597879392&amp;guid=a2967e4541aa60b49bd87e9623c7a167&amp;type=3#LobbyScreen" />
+    <ui:VisualElement name="lobby-languages-panel" picking-mode="Ignore" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; color: rgb(24, 23, 23); background-color: rgba(58, 58, 58, 0.47); display: flex;">
+        <ui:VisualElement name="lobby-languages" picking-mode="Ignore" style="flex-grow: 0; position: absolute; align-self: center; align-items: center; width: 45%; height: 65%; cursor: initial; background-image: url(&apos;project://database/Assets/Art/Lobby/frame01.png?fileID=2800000&amp;guid=20b1a00742603a740a83757c914f5360&amp;type=3#frame01&apos;); top: 15%; display: flex;">
+            <ui:VisualElement name="lobby-languages_text-icon" style="flex-grow: 0; background-image: none; width: 100%; height: 5%; -unity-background-scale-mode: scale-to-fit; margin-top: 3%; margin-right: 0; margin-left: 0; padding-left: 0; align-self: center; margin-bottom: 1%;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="lobby-languages_close-button" class="close-button" style="height: 200%; width: 13%;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="lobby-languages_icon-panel" picking-mode="Ignore" style="flex-grow: 0; width: 100%; height: 69%; padding-top: 3%;">
+                <ui:VisualElement name="languages-icon-panel-1" picking-mode="Ignore" style="flex-grow: 0; height: 50%; width: 100%; flex-direction: row; padding-right: 10%; padding-left: 10%; margin-top: 0; margin-bottom: 2%;">
+                    <ui:VisualElement name="lang-ch" class="lobby-lang-icon" />
+                    <ui:VisualElement name="lang-en" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_en.png?fileID=2800000&amp;guid=d9008ea59e42f2648b2c0b0d8958a168&amp;type=3#flag_en&apos;); margin-right: 3%;">
+                        <ui:VisualElement name="lang-selected" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Art/Lobby/select.png?fileID=21300000&amp;guid=ad1c1980946f3c0469924d23925cbf20&amp;type=3#select&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="lang-es" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_es.png?fileID=2800000&amp;guid=75b7590d931cd9a4586d9ec43d4cd023&amp;type=3#flag_es&apos;);" />
+                    <ui:VisualElement name="lang-in" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_in.png?fileID=2800000&amp;guid=5d17cf41fd9f18c469ce34625388242b&amp;type=3#flag_in&apos;);" />
+                    <ui:VisualElement name="lang-jp" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_jp.png?fileID=2800000&amp;guid=bcd453de37fbe664395e264cb1ee5ad1&amp;type=3#flag_jp&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="languages-icon-panel-2" picking-mode="Ignore" style="flex-grow: 0; height: 50%; width: 100%; flex-direction: row; padding-right: 10%; padding-left: 10%;">
+                    <ui:VisualElement name="lang-kr" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_kr.png?fileID=2800000&amp;guid=6fb70c128806bf64fa26a435116d91c5&amp;type=3#flag_kr&apos;);" />
+                    <ui:VisualElement name="lang-ph" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_ph.png?fileID=2800000&amp;guid=4d8bbc69f08b5564abb2b62f4c8727d2&amp;type=3#flag_ph&apos;);" />
+                    <ui:VisualElement name="lang-pt" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_pt.png?fileID=2800000&amp;guid=30b7093d3c6451d4f92f66d00d2a25fd&amp;type=3#flag_pt&apos;);" />
+                    <ui:VisualElement name="lang-th" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_th.png?fileID=2800000&amp;guid=afff8de36bb36ee44aba4a790cbcd44b&amp;type=3#flag_th&apos;);" />
+                    <ui:VisualElement name="lang-vt" class="lobby-lang-icon" style="background-image: url(&apos;project://database/Assets/Art/Lobby/flag_vt.png?fileID=2800000&amp;guid=392a289f85e377947bbb05c6bd104eda&amp;type=3#flag_vt&apos;);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="lobby-languages_confim-button" class="green-button" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); width: 39%; font-size: 40%; height: 13%; -unity-font-style: bold; -unity-text-outline-width: 10px; text-shadow: 1.8px -2.2px 21.7px rgb(0, 0, 0); margin-top: -1%; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 1%; padding-left: 0; justify-content: center;">
+                <ui:VisualElement style="flex-grow: 0; background-image: url(&apos;project://database/Assets/Art/Lobby/ok.png?fileID=2800000&amp;guid=56033663d8f52f84897cacf0d0352f26&amp;type=3#ok&apos;); -unity-background-scale-mode: scale-to-fit; height: 64%; width: 100%; align-self: center; justify-content: flex-start;" />
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

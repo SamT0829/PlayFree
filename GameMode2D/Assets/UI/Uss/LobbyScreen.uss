@@ -1,0 +1,207 @@
+.game-info-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    translate: 0 0;
+    transition-duration: 0.5s;
+}
+
+.game-info-container_move-left {
+    translate: -2000px 0;
+    transition-duration: 0.5s;
+    width: 100%;
+    height: 100%;
+}
+
+.game-info-container_move-right {
+    translate: 2000px 0;
+    transition-duration: 0.5s;
+    width: 100%;
+    height: 100%;
+}
+
+.lobby-page-black {
+    flex-grow: 0;
+    height: 70%;
+    width: 1.5%;
+    background-image: url('project://database/Assets/Art/Lobby/page_03.png?fileID=2800000&guid=ca1965e0e0db98a4fa8f656a8b761f5e&type=3#page_03');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.lobby-page-white {
+    background-image: url('project://database/Assets/Art/Lobby/page_04.png?fileID=2800000&guid=4e942f85f8ad2284a8cafb94353bd701&type=3#page_04');
+    width: 1.5%;
+    height: 70%;
+}
+
+.lobby-button {
+    background-image: url('project://database/Assets/Art/Lobby/page_02.png?fileID=2800000&guid=baad0c6ef4f5d0842a7bce8cddd0a989&type=3#page_02');
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.lobby-button:hover {
+    -unity-background-image-tint-color: rgb(229, 229, 229);
+}
+
+.lobby-button:active {
+    -unity-background-image-tint-color: rgb(149, 149, 149);
+}
+
+.lobby-lang-icon {
+    flex-grow: 0;
+    width: 20%;
+    height: 80%;
+    background-image: url('project://database/Assets/Art/Lobby/flag_cn.png?fileID=2800000&guid=38bcea083fad72449acc3b5133f54e7a&type=3#flag_cn');
+    -unity-background-scale-mode: scale-to-fit;
+    margin-right: 3%;
+    margin-left: 0;
+    margin-top: 0;
+    padding-right: 0;
+    justify-content: center;
+    align-self: center;
+}
+
+TextField #unity-text-input {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(145, 255, 255);
+    font-size: 87%;
+    padding-left: 7%;
+    -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime');
+}
+
+.menu-button {
+    flex-grow: 1;
+    position: absolute;
+    right: 3%;
+    width: 4%;
+    height: 66%;
+    background-image: url('project://database/Assets/Art/Lobby/more.png?fileID=2800000&guid=07abcc8121ee8a642b7438da4f7cdc53&type=3#more');
+    -unity-background-scale-mode: scale-to-fit;
+    align-self: center;
+}
+
+.tranfer-button {
+    background-image: url('project://database/Assets/Art/Lobby/button_add%201.png?fileID=2800000&guid=085c490c28c717e4e9e72f77dd176763&type=3#button_add 1');
+    position: absolute;
+    background-color: rgba(188, 188, 188, 0);
+    color: rgb(255, 255, 255);
+    height: 70%;
+    width: 10%;
+    top: 12%;
+    left: 25%;
+    font-size: 41%;
+    -unity-font-style: bold;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    -unity-text-outline-width: 1.1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    text-shadow: 1px 2.1px 0 rgb(0, 0, 0);
+    word-spacing: 0;
+    letter-spacing: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    white-space: nowrap;
+    text-overflow: clip;
+    -unity-text-align: middle-center;
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+.tranfer-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/button_add_2%201.png?fileID=2800000&guid=5b9ad74db6432b64ebb13d2cf38232f7&type=3#button_add_2 1');
+}
+
+.close-button {
+    position: absolute;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-image: url('project://database/Assets/Art/Lobby/close.png?fileID=2800000&guid=39f3e2aa4556db74dad9ef14430d72b8&type=3#close');
+    right: 0;
+    width: 10%;
+    height: 110%;
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(188, 188, 188, 0);
+    top: -29%;
+}
+
+.close-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/close.png?fileID=2800000&guid=39f3e2aa4556db74dad9ef14430d72b8&type=3#close');
+    -unity-background-image-tint-color: rgb(176, 175, 175);
+}
+
+.green-button {
+    background-image: url('project://database/Assets/Art/Lobby/button01.png?fileID=2800000&guid=5924940b2739e464eb40f218ec1455a5&type=3#button01');
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+    font-size: 18px;
+    -unity-text-outline-color: rgb(255, 255, 255);
+    -unity-text-outline-width: 1px;
+}
+
+.green-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/button01_2.png?fileID=2800000&guid=26a9e430b1bba9640a1992baf7527f2e&type=3#button01_2');
+}
+
+.lobby-menu_language-button {
+    background-color: rgba(188, 188, 188, 0);
+    background-image: url('project://database/Assets/Art/Lobby/button_lang.png?fileID=2800000&guid=cf92763bdffc2ef429cb5dc8a490cbd5&type=3#button_lang');
+    width: 90%;
+    height: 60%;
+    -unity-background-scale-mode: scale-to-fit;
+    align-self: center;
+}
+
+.lobby-menu_language-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/button_lang_2.png?fileID=2800000&guid=9b2b7edbda4f9014281605bf511485c8&type=3#button_lang_2');
+}
+
+.lobby-button:hover {
+    background-image: url('project://database/Assets/Art/Lobby/button_more.png?fileID=2800000&guid=44f074adfef28c34aa1a30aea8b1d46e&type=3#button_more');
+}
+
+.menu-button:hover {
+    background-image: url('project://database/Assets/Art/Lobby/button_more.png?fileID=2800000&guid=44f074adfef28c34aa1a30aea8b1d46e&type=3#button_more');
+}
+
+.menu-button:active {
+    background-image: url('project://database/Assets/Art/Lobby/button_more_3.png?fileID=2800000&guid=339887ecc32090d4f864d00d9ed4da77&type=3#button_more_3');
+}
+
+.game-info-container_scroll {
+    width: 65%;
+    height: 85%;
+    flex-shrink: 0;
+    align-self: center;
+    margin-left: 3%;
+}
+
+ScrollView #unity-content-container {
+    flex-grow: 1;
+    flex-direction: row;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+ScrollView #unity-content-viewport {
+    flex-grow: 0;
+    width: 100%;
+    height: 100%;
+}
