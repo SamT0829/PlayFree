@@ -7,6 +7,7 @@ public class UniWebViewController : MonoBehaviour
 {
     public static Action OnUniWebViewPageFinish;
     public static Action OnUniWebViewPageClose;
+    public static Action<int, string> OnUniWebViewPageError;
 
     private UniWebView m_uniWebView;
 
@@ -20,6 +21,7 @@ public class UniWebViewController : MonoBehaviour
         GameManager.OnSwithUI += SwitchWebView;
     }
 
+    // 開啟 webview
     public void OpenWeb(string m_url)
     {
         if (m_uniWebView == null)
@@ -32,6 +34,13 @@ public class UniWebViewController : MonoBehaviour
         m_uniWebView.Load(m_url);
     }
 
+    // 顯示 webview
+    public void ShowUniWeb()
+    {
+        m_uniWebView.Show();
+    }
+
+    // 關閉 webview
     public void CloseWeb()
     {
         m_uniWebView.CleanCache();
@@ -41,36 +50,7 @@ public class UniWebViewController : MonoBehaviour
         m_uniWebView = null;
     }
 
-    private bool OnShouldClose(UniWebView webView)
-    {
-        m_uniWebView = null;
-        OnUniWebViewPageClose.Invoke();
-       
-        return true;
-    }
-
-    private void OnLoadingErrorReceived(UniWebView webView, int errorCode, string errorMessage, UniWebViewNativeResultPayload payload)
-    {
-        // m_state.text = "Loading Error !!! " + errorCode;
-    }
-
-    private void OnPageStart(UniWebView webView, string url)
-    {
-        m_uniWebView.Hide();
-        // m_state.text = "Loading......!!!";
-    }
-
-    public void ShowUniWeb()
-    {
-        m_uniWebView.Show();
-    }
-
-    private void OnPageFinish(UniWebView webView, int statusCode, string url)
-    {
-        // m_state.text = "Finish!!!";
-        OnUniWebViewPageFinish.Invoke();
-    }
-
+    // Init
     private void UniWebViewMethod(Transform parent)
     {
         GameObject webView = new GameObject();
@@ -96,6 +76,34 @@ public class UniWebViewController : MonoBehaviour
         // };
 
         SwitchWebView();
+    }
+
+    // event
+    private bool OnShouldClose(UniWebView webView)
+    {
+        m_uniWebView = null;
+        OnUniWebViewPageClose.Invoke();
+
+        return true;
+    }
+
+    private void OnLoadingErrorReceived(UniWebView webView, int errorCode, string errorMessage, UniWebViewNativeResultPayload payload)
+    {
+        // m_state.text = "Loading Error !!! " + errorCode;
+        CloseWeb();
+        OnUniWebViewPageError.Invoke(errorCode, errorMessage);
+    }
+
+    private void OnPageStart(UniWebView webView, string url)
+    {
+        m_uniWebView.Hide();
+        // m_state.text = "Loading......!!!";
+    }
+
+    private void OnPageFinish(UniWebView webView, int statusCode, string url)
+    {
+        // m_state.text = "Finish!!!";
+        OnUniWebViewPageFinish.Invoke();
     }
 
     private void SwitchWebView()

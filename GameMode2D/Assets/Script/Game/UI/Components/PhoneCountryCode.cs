@@ -23,7 +23,7 @@ public class PhoneCountryCode
     private Label m_countryNameLabel;
     private Label m_countryCodeNumberLabel;
 
-
+    // Init
     public void SetVisualElements(VisualElement root)
     {
         Root = root;
@@ -31,7 +31,6 @@ public class PhoneCountryCode
         m_countryNameLabel = Root.Q<Label>(s_countryNameLabelName);
         m_countryCodeNumberLabel = Root.Q<Label>(s_countryCodeNumbererLabelName);
     }
-
     public void InitCountryCode(CountryCodeInfo countryCodeInfo)
     {
         CountryId = countryCodeInfo.ID;

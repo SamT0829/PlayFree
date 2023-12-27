@@ -86,7 +86,7 @@
                     <ui:VisualElement name="login-confirm-button-text-vt" class="theme_language-vt" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Art/signup/%E8%AA%9E%E7%B3%BB/signup_vt.png?fileID=2800000&amp;guid=5b8b3aa5426c58a4eb57c0e7cd828873&amp;type=3#signup_vt&apos;); -unity-background-scale-mode: scale-to-fit;" />
                 </ui:VisualElement>
             </ui:Button>
-            <ui:ScrollView name="login-country-code_scrollview" style="width: 95%; height: 80%; background-image: url(&apos;project://database/Assets/Art/signup/dropdown.png?fileID=2800000&amp;guid=71cdd0d8884f48f43a2898f839c9e1fd&amp;type=3#dropdown&apos;); top: 56%; align-self: flex-start; left: 2%; margin-top: 0; padding-top: 2%; padding-bottom: 0; padding-left: 1%; display: none; flex-direction: row; flex-grow: 0; padding-right: 3%;" />
+            <ui:ScrollView name="login-country-code_scrollview" style="width: 95%; height: 80%; background-image: url(&apos;project://database/Assets/Art/signup/dropdown.png?fileID=2800000&amp;guid=71cdd0d8884f48f43a2898f839c9e1fd&amp;type=3#dropdown&apos;); top: 67%; align-self: flex-start; left: 2%; margin-top: 0; padding-top: 2%; padding-bottom: 0; padding-left: 1%; display: none; flex-direction: row; flex-grow: 0; padding-right: 5%; position: absolute; flex-shrink: 0; margin-right: 0;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

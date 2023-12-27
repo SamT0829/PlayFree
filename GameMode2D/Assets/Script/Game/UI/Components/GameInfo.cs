@@ -20,7 +20,7 @@ public class GameInfo
     private int m_gameId;
     public int GameId { get => m_gameId; }
 
-
+    // Init
     public void SetVisualElements(VisualElement element)
     {
         m_root = element;
@@ -30,8 +30,6 @@ public class GameInfo
 
         element.RegisterCallback<ClickEvent>(OnClickEvent);
     }
-
-
     public IEnumerator InitGameWeb(string spriteUrl, int gameId, string gameName, Action onClick)
     {
         m_gameId = gameId;
@@ -40,11 +38,13 @@ public class GameInfo
         yield return GetIconURL(spriteUrl);
     }
 
+    // event
     private void OnClickEvent(ClickEvent evt)
     {
         OnClickAction.Invoke();
     }
 
+    //function
     private IEnumerator GetIconURL(string url)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);

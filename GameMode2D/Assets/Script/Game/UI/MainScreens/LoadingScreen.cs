@@ -28,7 +28,6 @@ public class LoadingScreen : MonoBehaviour
     private VisualElement m_loadingCirclePanel;
     private VisualElement m_loadingCircleIcon;
 
-
     private void Awake()
     {
         m_root = m_Document.rootVisualElement;
@@ -45,8 +44,8 @@ public class LoadingScreen : MonoBehaviour
         LobbyScreen.TransferFinish += OnHideLoadingCirclePanel;
 
         UniWebViewController.OnUniWebViewPageFinish += () => StartCoroutine(OnUniWebViewPageFinish());
+        UniWebViewController.OnUniWebViewPageError += OnUniWebViewPageError;
     }
-
 
 
     private void OnDisable()
@@ -58,9 +57,10 @@ public class LoadingScreen : MonoBehaviour
         LobbyScreen.TransferFinish -= OnHideLoadingCirclePanel;
 
         UniWebViewController.OnUniWebViewPageFinish -= () => StartCoroutine(OnUniWebViewPageFinish());
+        UniWebViewController.OnUniWebViewPageError -= OnUniWebViewPageError;
     }
 
-
+    // Init
     private void SetVisualElements()
     {
         m_loadingScreen = m_root.Q(s_loadingScreenName);
@@ -71,6 +71,7 @@ public class LoadingScreen : MonoBehaviour
         m_loadingCircleIcon = m_root.Q(s_loadingCircleIconName);
     }
 
+    // event
     private void OnShowLoadingBarPanel()
     {
         Utility.VisualElementDisplayEnable(m_loadingScreen, true);
@@ -78,12 +79,23 @@ public class LoadingScreen : MonoBehaviour
         Utility.VisualElementDisplayEnable(m_loadingCirclePanel, false);
         m_loadingProgressBar.value = m_loadingProgressBar.lowValue;
     }
-
     private void OnLoadingProcess(int value)
     {
         StartCoroutine(LoadingProcess(value));
     }
+    private IEnumerator OnUniWebViewPageFinish()
+    {
+        yield return LoadingProcess(100);
+        GameManager.Instance.UniWebViewController.ShowUniWeb();
 
+        Utility.SetScreenOrientation(true, true, true, true);
+    }
+    private void OnUniWebViewPageError(int errorCode, string errorMessage)
+    {
+        Utility.VisualElementDisplayEnable(m_loadingScreen, false);
+    }
+
+    // function
     private IEnumerator LoadingProcess(int value)
     {
         while (m_loadingProgressBar.value < value)
@@ -94,14 +106,6 @@ public class LoadingScreen : MonoBehaviour
 
         if (m_loadingProgressBar.value == 100)
             Utility.VisualElementDisplayEnable(m_loadingScreen, false);
-    }
-
-    private IEnumerator OnUniWebViewPageFinish()
-    {
-        yield return LoadingProcess(100);
-        GameManager.Instance.UniWebViewController.ShowUniWeb();
-
-        Utility.SetScreenOrientation(true, true, true, true);
     }
 
     private void OnShowLoadingCirclePanel()

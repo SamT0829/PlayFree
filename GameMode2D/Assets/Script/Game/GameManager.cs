@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIDocument m_Document;
 
     [SerializeField] private bool m_waitRespond;
-    [SerializeField] private bool m_LoginSuccses;
-
 
     private void Awake()
     {
@@ -65,11 +63,6 @@ public class GameManager : MonoBehaviour
 
         if (PhoneNumberData == null)
             PhoneNumberData = Resources.Load<PhoneNumberSO>(s_resourcePath);
-
-        LobbyScreen.LoginRespondFinish += LoginSuccses;
-
-
-        Debug.Log("screen width = " + Screen.width + " , screen hight = " + Screen.height);
 
         if (Screen.width > Screen.height)
         {
@@ -105,46 +98,15 @@ public class GameManager : MonoBehaviour
         LobbyScreen.OnClickLanguageConfirmButton -= () => ApplyTheme(Language);
     }
 
-    public bool WaitRespond()
-    {
-        return m_waitRespond || m_LoginSuccses;
-    }
-
+    // Login Request
     public void SendLoginRequest(string userName, string phoneNumber)
     {
         UserName = userName;
         PhoneNumber = phoneNumber;
+        PhoneNumberData.UserName = userName;
+        PhoneNumberData.PhoneNumber = phoneNumber;
         StartCoroutine(AccountLogin());
     }
-
-    public IEnumerator SendAccountInfoRequest()
-    {
-
-        var response = string.Empty;
-        Task.Run(async () => response = await HttpClientAPI.UserInfo(s_domain, PhoneNumber));
-        LoadingProcces.Invoke(20);
-
-        while (response == string.Empty)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        Debug.Log("Account Login UserInfo response = " + response);
-        LoadingProcces.Invoke(50);
-        UserInfoData userInfodata = JsonConvert.DeserializeObject<UserInfoData>(response);
-
-        UpdateUserInfoData.Invoke(userInfodata);
-        LoadingProcces.Invoke(100);
-    }
-
-    public List<string> GetGameLanguage()
-    {
-        List<string> language = new();
-        m_ThemeSettings.ForEach(theme => language.Add(theme.themeName));
-
-        return language;
-    }
-
     private IEnumerator AccountLogin()
     {
         LoadingStart.Invoke();
@@ -204,20 +166,49 @@ public class GameManager : MonoBehaviour
         LoadingProcces.Invoke(100);
         AccountLoginFinish.Invoke();
     }
-
     private void LoginSuccses()
     {
         m_waitRespond = false;
-        m_LoginSuccses = true;
+    }
+    public bool WaitRespond()
+    {
+        return m_waitRespond;
     }
 
+    // Acount Info Request
+    public IEnumerator SendAccountInfoRequest()
+    {
+        var response = string.Empty;
+        Task.Run(async () => response = await HttpClientAPI.UserInfo(s_domain, PhoneNumber));
+        LoadingProcces.Invoke(20);
+
+        while (response == string.Empty)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Debug.Log("Account Login UserInfo response = " + response);
+        LoadingProcces.Invoke(50);
+        UserInfoData userInfodata = JsonConvert.DeserializeObject<UserInfoData>(response);
+
+        UpdateUserInfoData.Invoke(userInfodata);
+        LoadingProcces.Invoke(100);
+    }
+
+    // Langeuage
+    public List<string> GetGameLanguage()
+    {
+        List<string> language = new();
+        m_ThemeSettings.ForEach(theme => language.Add(theme.themeName));
+
+        return language;
+    }
     private ThemeStyleSheet GetThemeStyleSheet(string themeName)
     {
         ThemeSettings thisStyleSheet = m_ThemeSettings.Find(x => x.themeName == themeName);
 
         return thisStyleSheet?.tss;
     }
-
     private void ApplyTheme(string theme)
     {
         ThemeStyleSheet tss = GetThemeStyleSheet(theme);
@@ -226,6 +217,7 @@ public class GameManager : MonoBehaviour
             m_Document.panelSettings.themeStyleSheet = tss;
     }
 
+    // event
     private void CheckIfSwitchUI()
     {
         if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)

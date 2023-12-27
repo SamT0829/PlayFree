@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class LoginScreen : MonoBehaviour
+public class LoginScreen : MonoBehaviour, ISaveable
 {
     public static Action OnClickLanguageButton;
 
@@ -31,6 +31,9 @@ public class LoginScreen : MonoBehaviour
 
     private bool m_WrongMessage = false;
     private bool m_loginCountryShow = false;
+
+    private string m_userName;
+    private string m_phoneNumber;
 
     private VisualElement m_root;
     private VisualElement m_loginScreen;
@@ -61,16 +64,11 @@ public class LoginScreen : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.PhoneNumberData.PhoneNumber != string.Empty)
-            GameManager.Instance.SendLoginRequest(GameManager.Instance.PhoneNumberData.UserName, GameManager.Instance.PhoneNumberData.PhoneNumber);
+        ISaveable saveable = this;
+        saveable.SaveableRegister();
 
+        SaveLoadManager.Instance.Load();
         CreateTable();
-    }
-
-    public void CreateTable()
-    {
-        TableManager.Instance.CreateTable<CountryCodeTable>(nameof(CountryCodeTable));
-        SetCountryCodeSetting();
     }
 
     private void OnEnable()
@@ -83,6 +81,12 @@ public class LoginScreen : MonoBehaviour
         GameManager.AccountLoginFinish -= () => SetLoginScreenEnable(false);
     }
 
+    // Init
+    public void CreateTable()
+    {
+        TableManager.Instance.CreateTable<CountryCodeTable>(nameof(CountryCodeTable));
+        SetCountryCodeSetting();
+    }
     private void SetVisualElements()
     {
         m_loginScreen = m_root.Q(s_loginScreenName);
@@ -98,7 +102,6 @@ public class LoginScreen : MonoBehaviour
         m_loginCountryLabel = m_root.Q<Label>(s_loginCountryCodeLabelName);
         m_loginCountryScrollView = m_root.Q<ScrollView>(s_loginCountryCodeScrollViewName);
     }
-
     private void RegisterButtonCallbacks()
     {
         m_confirmButton.RegisterCallback<ClickEvent>(OnClickConfirm);
@@ -123,27 +126,30 @@ public class LoginScreen : MonoBehaviour
             }
         });
 
+        // 當輸入時
         m_userNameTextField.RegisterCallback<FocusEvent>(e =>
         {
             OnTextFieldIconEnable(m_userNameTextField, m_userNameIcon, false);
         });
 
+        // 當離開輸入時
         m_userNameTextField.RegisterCallback<FocusOutEvent>(e =>
         {
             OnTextFieldIconEnable(m_userNameTextField, m_userNameIcon, true);
         });
 
+        // 當輸入時
         m_phoneNumberTextField.RegisterCallback<FocusEvent>(e =>
         {
             OnTextFieldIconEnable(m_phoneNumberTextField, m_phoneNumberMessageIcon, false);
         });
 
+        // 當離開輸入時
         m_phoneNumberTextField.RegisterCallback<FocusOutEvent>(e =>
         {
             OnTextFieldIconEnable(m_phoneNumberTextField, m_phoneNumberMessageIcon, !m_WrongMessage);
         });
     }
-
     private void SetCountryCodeSetting()
     {
         var table = TableManager.Instance.GetTable<CountryCodeTable>().CountryCodeInfoTable;
@@ -168,7 +174,15 @@ public class LoginScreen : MonoBehaviour
             });
         }
     }
+    private void SetLoginScreenEnable(bool enabled)
+    {
+        if (enabled)
+            m_loginScreen.style.display = DisplayStyle.Flex;
+        else
+            m_loginScreen.style.display = DisplayStyle.None;
+    }
 
+    // event
     private void OnTextFieldIconEnable(TextField textField, VisualElement textFieldIcon, bool show = true)
     {
         if (textField == null || textFieldIcon == null)
@@ -179,25 +193,23 @@ public class LoginScreen : MonoBehaviour
         else
             textFieldIcon.style.display = DisplayStyle.None;
     }
-
     private void OnClickConfirm(ClickEvent evt)
     {
         if (GameManager.Instance.WaitRespond())
             return;
 
-        var phoneNumber = m_loginCountryLabel.text + m_phoneNumberTextField.value;
-        var userName = m_userNameTextField.value;
+        m_userName = m_userNameTextField.value;
+        m_phoneNumber = m_loginCountryLabel.text + m_phoneNumberTextField.value;
 
         try
         {
-            var isValidNumber = Utility.ParsePhoneNumber(phoneNumber, GameManager.Instance.PhoneRegion);
+            var isValidNumber = Utility.ParsePhoneNumber(m_phoneNumber, GameManager.Instance.PhoneRegion);
 
             if (isValidNumber)
             {
                 Debug.Log("The mobile phone number is a valid number");
-                GameManager.Instance.PhoneNumberData.UserName = userName;
-                GameManager.Instance.PhoneNumberData.PhoneNumber = phoneNumber;
-                GameManager.Instance.SendLoginRequest(userName, phoneNumber);
+                GameManager.Instance.SendLoginRequest(m_userName, m_phoneNumber);
+                SaveLoadManager.Instance.Save();
             }
             else
             {
@@ -216,11 +228,20 @@ public class LoginScreen : MonoBehaviour
         }
     }
 
-    private void SetLoginScreenEnable(bool enabled)
+    // interface SaveLoad
+    public GameSaveData GenerateSaveData()
     {
-        if (enabled)
-            m_loginScreen.style.display = DisplayStyle.Flex;
-        else
-            m_loginScreen.style.display = DisplayStyle.None;
+        GameSaveData saveData = new GameSaveData();
+        saveData.UserName = m_userName;
+        saveData.PhoneNumber = m_phoneNumber;
+        return saveData;
+    }
+    public void RestoreGameData(GameSaveData saveData)
+    {
+        m_userName = saveData.UserName;
+        m_phoneNumber = saveData.PhoneNumber;
+
+        if (m_phoneNumber != string.Empty)
+            GameManager.Instance.SendLoginRequest(m_userName, m_phoneNumber);
     }
 }

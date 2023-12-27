@@ -10,7 +10,6 @@ public class GameScreen : MonoBehaviour
 
     [SerializeField] protected UIDocument m_Document;
 
-
     private const string s_gameScreenName = "game-screen";
     private const string s_gameScreenHomeButtonName = "game-screen_home-button";
 
@@ -39,6 +38,7 @@ public class GameScreen : MonoBehaviour
         GameManager.OnSwithUI += OnSwithUI;
 
         UniWebViewController.OnUniWebViewPageClose += () => m_uniWebViewClose = true;
+        UniWebViewController.OnUniWebViewPageError += OnUniWebViewPageError;
     }
 
     private void OnDisable()
@@ -47,8 +47,10 @@ public class GameScreen : MonoBehaviour
         GameManager.OnSwithUI -= OnSwithUI;
 
         UniWebViewController.OnUniWebViewPageClose -= () => m_uniWebViewClose = true;
+        UniWebViewController.OnUniWebViewPageError -= OnUniWebViewPageError;
     }
 
+    // Init
     private void SetVisualElements()
     {
         m_homeButton = m_root.Q<Button>(s_gameScreenHomeButtonName);
@@ -58,12 +60,13 @@ public class GameScreen : MonoBehaviour
     {
         m_homeButton.RegisterCallback<ClickEvent>(e =>
         {
-            Screen.orientation = ScreenOrientation.LandscapeRight;
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             Utility.SetScreenOrientation(true, true, false, false);
             StartCoroutine(OnClickHomeButton(e));
         });
     }
 
+    // function
     private void SetGameScreenEnable(bool enabled)
     {
         if (enabled)
@@ -75,7 +78,6 @@ public class GameScreen : MonoBehaviour
     }
 
     // event
-
     private IEnumerator OnClickHomeButton(ClickEvent evt)
     {
         GameManager.LoadingStart.Invoke();
@@ -87,7 +89,6 @@ public class GameScreen : MonoBehaviour
         SetGameScreenEnable(false);
         OnCloseWebView.Invoke();
     }
-
     private void OnOpenWebView(GameWebURLData gameWebData)
     {
         SetGameScreenEnable(enabled);
@@ -99,7 +100,6 @@ public class GameScreen : MonoBehaviour
             m_uniWebViewClose = false;
         }
     }
-
     private void OnSwithUI()
     {
         if (GameManager.Instance.switchUI == "W")
@@ -112,5 +112,9 @@ public class GameScreen : MonoBehaviour
             m_homeButton.RemoveFromClassList(s_gameScreenHomeButtonWClass);
             m_homeButton.AddToClassList(s_gameScreenHomeButtonVClass);
         }
+    }
+    private void OnUniWebViewPageError(int errorCode, string errorMessage)
+    {
+        Utility.VisualElementDisplayEnable(m_gameScreen, true);
     }
 }

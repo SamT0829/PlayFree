@@ -33,11 +33,17 @@ public class TransferData
 }
 
 
-
-
 [Serializable]
 public class ThemeSettings
 {
     public string themeName;
     public ThemeStyleSheet tss;
+}
+
+public class CountryCodeInfo
+{
+    public int ID;
+    public string countryName;
+    public string countryCode;
+    public string countryAbbreviation;
 }

@@ -49,12 +49,3 @@ public class CountryCodeTable : TableBase
     {
     }
 }
-
-
-public class CountryCodeInfo
-{
-    public int ID;
-    public string countryName;
-    public string countryCode;
-    public string countryAbbreviation;
-}

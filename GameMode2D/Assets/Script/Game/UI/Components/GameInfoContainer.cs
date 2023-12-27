@@ -16,6 +16,7 @@ public class GameInfoContainer
     public VisualElement Root;
     public VisualElement gameInfoContainer;
 
+    // Init
     public void SetVisualElements(VisualElement element, int page)
     {
         Root = element;
@@ -29,7 +30,6 @@ public class GameInfoContainer
 
         Page = page;
     }
-
     public void AddGameInfo(GameInfo gameInfo)
     {
         m_gameInfoList.Add(gameInfo);
@@ -38,13 +38,18 @@ public class GameInfoContainer
         m_gameInfoParentList[index].Add(gameInfo.m_root);
     }
 
+    // function
     public bool GameInfoFull()
     {
         return m_gameInfoParentList.Count == m_gameInfoList.Count;
     }
-
     public GameInfo GetGameInfo(int gameId)
     {
         return m_gameInfoList.FirstOrDefault(gameInfo => gameInfo.GameId == gameId);
+    }
+
+    public void GameInfoContainerDisplayEnable(bool enabled)
+    {
+        Utility.VisualElementDisplayEnable(gameInfoContainer, enabled);
     }
 }

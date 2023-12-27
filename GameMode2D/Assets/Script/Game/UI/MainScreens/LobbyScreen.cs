@@ -107,6 +107,8 @@ public class LobbyScreen : MonoBehaviour
 
     private bool m_onTranferMoney = false;
 
+    private const int eventIconId = 10001;
+
     private void Awake()
     {
         m_root = m_Document.rootVisualElement;
@@ -116,6 +118,7 @@ public class LobbyScreen : MonoBehaviour
         SetLanguagesSetting();
 
         m_lobbyPageTotalCount = 0;
+        m_lobbyCurrentPage = 1;
         m_lobbyTransferTextField.value = "0";
         m_choseLanguage = GameManager.Instance.Language;
     }
@@ -129,6 +132,7 @@ public class LobbyScreen : MonoBehaviour
         GameScreen.OnCloseWebView += OnCloseWebView;
 
         LoginScreen.OnClickLanguageButton += () => LanguagesPanelEnable(true);
+        UniWebViewController.OnUniWebViewPageError += OnUniWebViewPageError;
     }
 
     private void OnDisable()
@@ -140,6 +144,7 @@ public class LobbyScreen : MonoBehaviour
         GameScreen.OnCloseWebView -= OnCloseWebView;
 
         LoginScreen.OnClickLanguageButton += () => LanguagesPanelEnable(true);
+        UniWebViewController.OnUniWebViewPageError -= OnUniWebViewPageError;
     }
 
     private void Update()
@@ -154,16 +159,31 @@ public class LobbyScreen : MonoBehaviour
             }
         }
 
+        OnUpdateCurrenPage();
+    }
+
+    // function
+    private void OnUpdateCurrenPage()
+    {
+        if (m_lobbyScreen.style.display == DisplayStyle.None)
+            return;
+
         if (ScrollViewConfirmWidth != 0)
         {
             var locationx = Mathf.Abs(m_lobbyGameInfoScrollViewContainer.Q("unity-content-container").resolvedStyle.translate.x) + ScrollViewConfirmWidth / 2;
-            var page = (int)Mathf.Floor(locationx / ScrollViewConfirmWidth);
+            var page = (int)Mathf.Floor(locationx / ScrollViewConfirmWidth) + 1;
+
+            if (m_lobbyCurrentPage == page)
+                return;
+
             m_lobbyCurrentPage = page;
-            CurruntPageSetting();
+            CurrentPageSetting();
+            CurrentGameContainerSetting();
         }
     }
 
-    public void SetVisualElements()
+    // Init
+    private void SetVisualElements()
     {
         m_lobbyScreen = m_root.Q(s_lobbyScreenName);
 
@@ -193,7 +213,6 @@ public class LobbyScreen : MonoBehaviour
 
         m_langSelectedElement = m_root.Q(s_languageSelectionElemenName);
     }
-
     private void RegisterButtonCallbacks()
     {
         // m_lobbyGameInfoLeftButton.RegisterCallback<ClickEvent>(e => LobbyGameInfoPreviousPage());
@@ -211,7 +230,6 @@ public class LobbyScreen : MonoBehaviour
 
         // m_lobbyGameInfoScrollViewContainer.RegisterCallback<DragUpdatedEvent>(OnPointerMoveEvent);
     }
-
     private void SetLanguagesSetting()
     {
         GameManager.Instance.GetGameLanguage().ForEach(language =>
@@ -229,9 +247,9 @@ public class LobbyScreen : MonoBehaviour
     // game info
     private IEnumerator GenerateLobbyInfo(UserInfoData userInfoData, GameInfoData gameInfoData)
     {
+        // Init Game Info
         int page = 1;
         GameInfoContainer gameInfoContainer = GenerateGameInfoContainerElement(page);
-
 
         for (int i = 0; i < gameInfoData.games.Count; i++)
         {
@@ -244,16 +262,24 @@ public class LobbyScreen : MonoBehaviour
             }
         }
 
-        m_lobbyTransferTotalMoneyLabel.text = userInfoData.balance;
-        SetInformationUserName();
-        GameInfoPageSetting();
+        // Init Page Info
         GenerateLobbyPage();
+
+        //  Init game information
+        SetInformationUser(userInfoData);
+
+        // game setting
+        CurrentGameContainerSetting();
+        CurrentPageSetting();
 
         LoginRespondFinish.Invoke();
     }
     private IEnumerator CreateGameWebUI(GameData gameData, GameInfoContainer gameInfoContainer)
     {
-        yield return GenerateGameInfoElement(gameData, gameInfoContainer);
+        if (gameData.gameId != eventIconId)
+        {
+            yield return GenerateGameInfoElement(gameData, gameInfoContainer);
+        }
     }
     private GameInfoContainer GenerateGameInfoContainerElement(int page)
     {
@@ -292,6 +318,8 @@ public class LobbyScreen : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
             GameManager.LoadingStart.Invoke();
+        else
+            Utility.SetScreenOrientation(true, true, true, true);
 
         m_waitRespond = true;
         var response = string.Empty;
@@ -322,34 +350,33 @@ public class LobbyScreen : MonoBehaviour
 
         return null;
     }
-
+    private void CurrentGameContainerSetting()
+    {
+        m_gameInfoContainers.ForEach(container =>
+        {
+            if (container.Page > m_lobbyCurrentPage + 1 || container.Page < m_lobbyCurrentPage - 1)
+            {
+                container.GameInfoContainerDisplayEnable(false);
+            }
+            else
+            {
+                container.GameInfoContainerDisplayEnable(true);
+            }
+        });
+    }
 
     // page info
-    private void GameInfoPageSetting()
-    {
-        for (int i = 0; i < m_gameInfoContainers.Count; i++)
-        {
-            if (i == 0)
-            {
-                m_lobbyCurrentPage = i;
-                continue;
-            }
-
-            // m_gameInfoContainers[i].Root.AddToClassList(s_gameInfoContainerMoveRightClass);
-        }
-    }
     private void GenerateLobbyPage()
     {
         for (int i = 0; i < m_gameInfoContainers.Count; i++)
             GenerateLobbyPageElement();
 
-        CurruntPageSetting();
     }
     private VisualElement GenerateLobbyPageElement()
     {
 
         VisualElement element = new VisualElement();
-        element.name = s_lobbyPageName + "-" + m_lobbyPageTotalCount;
+        element.name = s_lobbyPageName + "-" + (m_lobbyPageTotalCount + 1);
         element.AddToClassList(s_lobbyPageBlackClass);
 
         m_lobbyPageParent.Insert(m_lobbyPageTotalCount + 1, element);
@@ -357,7 +384,7 @@ public class LobbyScreen : MonoBehaviour
 
         return element;
     }
-    private void CurruntPageSetting()
+    private void CurrentPageSetting()
     {
         var page = m_lobbyPageParent.Query(className: s_lobbyPageBlackClass).ToList();
         page.ForEach(element => element.RemoveFromClassList(s_lobbyPageWhiteClass));
@@ -365,6 +392,7 @@ public class LobbyScreen : MonoBehaviour
         var currentPageElement = page.FirstOrDefault(element => element.name == s_lobbyPageName + "-" + m_lobbyCurrentPage);
         currentPageElement.AddToClassList(s_lobbyPageWhiteClass);
     }
+
     private void LobbyGameInfoNextPage()
     {
         if (m_gameInfoContainers.Count <= m_lobbyCurrentPage + 1)
@@ -377,7 +405,7 @@ public class LobbyScreen : MonoBehaviour
         // nextContainer.Root.RemoveFromClassList(s_gameInfoContainerMoveRightClass);
 
         m_lobbyCurrentPage++;
-        CurruntPageSetting();
+        CurrentPageSetting();
     }
     private void LobbyGameInfoPreviousPage()
     {
@@ -392,13 +420,14 @@ public class LobbyScreen : MonoBehaviour
         // previousContainer.Root.RemoveFromClassList(s_gameInfoContainerMoveLeftClass);
 
         m_lobbyCurrentPage--;
-        CurruntPageSetting();
+        CurrentPageSetting();
     }
 
-    // information
-    private void SetInformationUserName()
+    // information user name
+    private void SetInformationUser(UserInfoData userInfoData)
     {
         m_lobbyInformationUserLabel.text = GameManager.Instance.UserName;
+        m_lobbyTransferTotalMoneyLabel.text = userInfoData.balance;
     }
 
     // languages
@@ -487,6 +516,8 @@ public class LobbyScreen : MonoBehaviour
     private void OnLobbyLanguagesConfirmButton(ClickEvent evt)
     {
         LanguagesPanelEnable(false);
+        Utility.VisualElementDisplayEnable(m_lobbyMenuPanel, false);
+
         if (GameManager.Instance.Language == m_choseLanguage)
             return;
 
@@ -510,7 +541,6 @@ public class LobbyScreen : MonoBehaviour
     private void OnCloseWebView()
     {
         SetLobbyScreenEnable(true);
-
         StartCoroutine(GameManager.Instance.SendAccountInfoRequest());
     }
     private void OnUpdateUserInfoData(UserInfoData data)
@@ -524,5 +554,9 @@ public class LobbyScreen : MonoBehaviour
         else
             m_lobbyScreen.style.display = DisplayStyle.None;
     }
-
+    private void OnUniWebViewPageError(int errorCode, string errorMessage)
+    {
+        Utility.VisualElementDisplayEnable(m_lobbyScreen, true);
+        m_lobbyInformationUserLabel.text = errorCode.ToString() + " " + errorMessage;
+    }
 }
